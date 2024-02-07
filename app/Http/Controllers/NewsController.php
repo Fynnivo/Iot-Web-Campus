@@ -15,6 +15,7 @@ class NewsController extends Controller
     {
         return Inertia::render('Homepage', [
             'title' => 'IOT Univeritas Krisnadwipayana',
+           
         ]);
     }
 
