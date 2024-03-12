@@ -15,24 +15,18 @@ import {
 import {
     HomeIcon,
     NewspaperIcon,
-    CubeTransparentIcon,
     UserCircleIcon,
-    CodeBracketSquareIcon,
     Square3Stack3DIcon,
     ChevronDownIcon,
     Cog6ToothIcon,
     InboxArrowDownIcon,
     LifebuoyIcon,
     PowerIcon,
-    RocketLaunchIcon,
     Bars2Icon,
     ChatBubbleLeftRightIcon,
+    UserIcon,
+    UserPlusIcon,
 } from "@heroicons/react/24/solid";
-
-// const user = [{
-//     name: "Ikhwan",
-//     role: 'admin'
-// }]
 
 // profile menu component
 const profileMenuItems = [
@@ -230,10 +224,57 @@ const navListItems = [
     },
 ];
 
+const navListItemsMobile = [
+    {
+        label: "Home",
+        icon: HomeIcon,
+    },
+    {
+        label: "News",
+        icon: NewspaperIcon,
+    },
+    {
+        label: "Contact",
+        icon: ChatBubbleLeftRightIcon,
+    },
+    {
+        label:  "Login to Your Account",
+        icon: UserIcon
+    },
+    {
+        label: "Sign Up",
+        icon: UserPlusIcon
+    }
+];
+
 function NavList() {
     return (
-        <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
+        <ul className="mt-2 mb-4 ml-28 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
             {navListItems.map(({ label, icon }, key) => (
+                <Typography
+                    key={label}
+                    as="a"
+                    href="#"
+                    variant="small"
+                    color="gray"
+                    className="font-medium text-blue-gray-500"
+                >
+                    <MenuItem className="flex items-center gap-2 lg:rounded-full">
+                        {React.createElement(icon, {
+                            className: "h-[18px] w-[18px]",
+                        })}{" "}
+                        <span className="text-gray-900"> {label}</span>
+                    </MenuItem>
+                </Typography>
+            ))}
+            <NavListMenu />
+        </ul>
+    );
+}
+function NavListMobile() {
+    return (
+        <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center h-screen">
+            {navListItemsMobile.map(({ label, icon }, key) => (
                 <Typography
                     key={label}
                     as="a"
@@ -274,23 +315,24 @@ export function ComplexNavbar(props) {
                 <div className="hidden lg:block">
                     <NavList />
                 </div>
+
+                {props.user ? "" :<div className="hidden lg:flex gap-2">
+                    <Button variant="text">Log In</Button>
+                    <Button className="bg-indigo-600 hover:bg-indigo-500">Sign Up</Button>
+                </div>}
                 <IconButton
                     size="sm"
                     color="blue-gray"
                     variant="text"
                     onClick={toggleIsNavOpen}
-                    className="ml-auto mr-2 lg:hidden"
+                    className="lg:hidden"
                 >
                     <Bars2Icon className="h-6 w-6" />
                 </IconButton>
-
-                {props.user ? "" :<Button size="sm" variant="text">
-                    <span>Log In</span>
-                </Button>}
                 {props.user ? <ProfileMenu /> : ""}
             </div>
-            <MobileNav open={isNavOpen} className="overflow-scroll">
-                <NavList />
+            <MobileNav open={isNavOpen} className="">
+                <NavListMobile />
             </MobileNav>
         </Navbar>
     );
